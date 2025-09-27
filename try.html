@@ -1,0 +1,1342 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smartees Montessori School - Quality Education in Elmina</title>
+    <link href="https://fonts.googleapis.com/css2?family=Geist+Sans:wght@300;400;500;600;700;800;900&family=Manrope:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <style>
+        :root {
+            /* Modern Color Palette - Blue Theme */
+            --primary: #1e40af;
+            --primary-light: #3b82f6;
+            --primary-dark: #1e3a8a;
+            --secondary: #2563eb;
+            --secondary-light: #60a5fa;
+            --accent: #1d4ed8;
+            --background: #ffffff;
+            --surface: #f0f9ff;
+            --surface-light: #eff6ff;
+            --text-primary: #1f2937;
+            --text-secondary: #4b5563;
+            --text-light: #9ca3af;
+            --border: #d1d5db;
+            --shadow: rgba(0, 0, 0, 0.08);
+            --shadow-lg: rgba(0, 0, 0, 0.12);
+            
+            /* Typography */
+            --font-primary: 'Geist Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+            --font-secondary: 'Manrope', -apple-system, BlinkMacSystemFont, sans-serif;
+            
+            /* Spacing */
+            --section-padding: 5rem 0;
+            --container-padding: 0 1.5rem;
+            --border-radius: 1rem;
+            --border-radius-lg: 1.5rem;
+            
+            /* Animations */
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            --transition-slow: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: var(--font-secondary);
+            line-height: 1.6;
+            color: var(--text-primary);
+            background: var(--background);
+            overflow-x: hidden;
+        }
+
+        /* Typography */
+        h1, h2, h3, h4, h5, h6 {
+            font-family: var(--font-primary);
+            font-weight: 700;
+            line-height: 1.2;
+            margin-bottom: 1rem;
+        }
+
+        h1 { font-size: clamp(2.5rem, 5vw, 4rem); }
+        h2 { font-size: clamp(2rem, 4vw, 3rem); }
+        h3 { font-size: clamp(1.5rem, 3vw, 2rem); }
+        h4 { font-size: clamp(1.25rem, 2.5vw, 1.5rem); }
+
+        p {
+            margin-bottom: 1rem;
+            color: var(--text-secondary);
+        }
+
+        /* Container */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: var(--container-padding);
+        }
+
+        /* Navigation */
+        .navbar {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--border);
+            z-index: 1000;
+            transition: var(--transition);
+        }
+
+        .navbar.scrolled {
+            background: rgba(255, 255, 255, 0.98);
+            box-shadow: 0 4px 20px var(--shadow);
+        }
+
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 1.5rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            font-family: var(--font-primary);
+            font-weight: 800;
+            font-size: 1.25rem;
+            color: var(--primary);
+            text-decoration: none;
+        }
+
+        .logo img {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+
+        .nav-menu {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+            align-items: center;
+        }
+
+        .nav-link {
+            text-decoration: none;
+            color: var(--text-primary);
+            font-weight: 500;
+            transition: var(--transition);
+            position: relative;
+        }
+
+        .nav-link:hover,
+        .nav-link.active {
+            color: var(--primary);
+        }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--primary);
+            transition: var(--transition);
+        }
+
+        .nav-link:hover::after,
+        .nav-link.active::after {
+            width: 100%;
+        }
+
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            color: var(--text-primary);
+            cursor: pointer;
+        }
+
+        /* Hero Section */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            position: relative;
+            background: linear-gradient(135deg, var(--surface) 0%, var(--surface-light) 100%);
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: -50%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            transform: skewX(-15deg);
+            z-index: 1;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+        }
+
+        .hero-text {
+            animation: slideInLeft 1s ease-out;
+        }
+
+        .hero-title {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 1.5rem;
+        }
+
+        .hero-subtitle {
+            font-size: 1.25rem;
+            color: var(--text-secondary);
+            margin-bottom: 2rem;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .hero-image {
+            position: relative;
+            animation: slideInRight 1s ease-out;
+        }
+
+        .hero-image img {
+            width: 100%;
+            height: 500px;
+            object-fit: cover;
+            border-radius: var(--border-radius-lg);
+            box-shadow: 0 20px 40px var(--shadow-lg);
+        }
+
+        /* Buttons */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.875rem 2rem;
+            border: none;
+            border-radius: var(--border-radius);
+            font-family: var(--font-primary);
+            font-weight: 600;
+            text-decoration: none;
+            cursor: pointer;
+            transition: var(--transition);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px var(--shadow-lg);
+        }
+
+        .btn-outline {
+            background: transparent;
+            color: var(--primary);
+            border: 2px solid var(--primary);
+        }
+
+        .btn-outline:hover {
+            background: var(--primary);
+            color: white;
+            transform: translateY(-2px);
+        }
+
+        /* Diagonal Sections */
+        .diagonal-section {
+            position: relative;
+            padding: var(--section-padding);
+            overflow: hidden;
+        }
+
+        .diagonal-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -50%;
+            width: 200%;
+            height: 100%;
+            background: var(--surface);
+            transform: skewY(-3deg);
+            z-index: -1;
+        }
+
+        .diagonal-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+        }
+
+        .diagonal-content.reverse {
+            direction: rtl;
+        }
+
+        .diagonal-content.reverse > * {
+            direction: ltr;
+        }
+
+        .diagonal-image {
+            position: relative;
+        }
+
+        .diagonal-image img {
+            width: 100%;
+            height: 400px;
+            object-fit: cover;
+            border-radius: var(--border-radius-lg);
+            box-shadow: 0 15px 35px var(--shadow-lg);
+            transition: var(--transition);
+        }
+
+        .diagonal-image:hover img {
+            transform: scale(1.05);
+        }
+
+        /* Image Slider */
+        .slider-container {
+            position: relative;
+            height: 500px;
+            border-radius: var(--border-radius-lg);
+            overflow: hidden;
+            margin: 3rem 0;
+        }
+
+        .slider-track {
+            display: flex;
+            height: 100%;
+            transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .slide {
+            min-width: 100%;
+            height: 100%;
+            position: relative;
+            background-size: cover;
+            background-position: center;
+        }
+
+        .slide::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(45deg, rgba(0,0,0,0.4) 0%, rgba(0,0,0,0.1) 100%);
+        }
+
+        .slide-content {
+            position: absolute;
+            bottom: 2rem;
+            left: 2rem;
+            color: white;
+            z-index: 2;
+        }
+
+        .slide-content h3 {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .slider-nav {
+            position: absolute;
+            bottom: 1rem;
+            right: 1rem;
+            display: flex;
+            gap: 0.5rem;
+            z-index: 3;
+        }
+
+        .slider-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.5);
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .slider-dot.active {
+            background: white;
+            transform: scale(1.2);
+        }
+
+        /* Cards */
+        .card {
+            background: white;
+            border-radius: var(--border-radius);
+            padding: 2rem;
+            box-shadow: 0 4px 20px var(--shadow);
+            transition: var(--transition);
+            border: 1px solid var(--border);
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px var(--shadow-lg);
+        }
+
+        .card-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin: 3rem 0;
+        }
+
+        /* Feature Icons */
+        .feature-icon {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            animation: float 3s ease-in-out infinite;
+        }
+
+        .feature-icon:nth-child(2n) {
+            animation-delay: 1s;
+        }
+
+        .feature-icon:nth-child(3n) {
+            animation-delay: 2s;
+        }
+
+        /* Section Titles */
+        .section-title {
+            text-align: center;
+            margin-bottom: 3rem;
+            position: relative;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60px;
+            height: 4px;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            border-radius: 2px;
+        }
+
+        /* Forms */
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 0.875rem 1rem;
+            border: 2px solid var(--border);
+            border-radius: var(--border-radius);
+            font-family: inherit;
+            transition: var(--transition);
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(30, 64, 175, 0.1);
+        }
+
+        /* Footer */
+        .footer {
+            background: var(--text-primary);
+            color: white;
+            padding: 3rem 0 1rem;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .footer-section h4 {
+            color: var(--primary-light);
+            margin-bottom: 1rem;
+        }
+
+        .footer-links {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 0.5rem;
+        }
+
+        .footer-links a {
+            color: #d1d5db;
+            text-decoration: none;
+            transition: var(--transition);
+        }
+
+        .footer-links a:hover {
+            color: var(--primary-light);
+        }
+
+        /* Map Container */
+        .map-container {
+            height: 400px;
+            border-radius: var(--border-radius);
+            overflow: hidden;
+            margin: 2rem 0;
+            box-shadow: 0 10px 30px var(--shadow-lg);
+        }
+
+        #map {
+            height: 100%;
+            width: 100%;
+        }
+
+        /* Stats Section */
+        .stats-section {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            color: white;
+            padding: 4rem 0;
+            text-align: center;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .stat-item {
+            padding: 1.5rem;
+        }
+
+        .stat-number {
+            font-size: 3rem;
+            font-weight: 800;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-label {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+
+        /* Testimonials */
+        .testimonial {
+            background: var(--surface);
+            border-radius: var(--border-radius);
+            padding: 2rem;
+            margin: 1rem 0;
+            position: relative;
+        }
+
+        .testimonial::before {
+            content: '"';
+            font-size: 4rem;
+            color: var(--primary-light);
+            position: absolute;
+            top: 0;
+            left: 1rem;
+            line-height: 1;
+            opacity: 0.3;
+        }
+
+        .testimonial-content {
+            margin-top: 1rem;
+            font-style: italic;
+        }
+
+        .testimonial-author {
+            margin-top: 1rem;
+            font-weight: 600;
+            color: var(--primary);
+        }
+
+        /* Animations */
+        @keyframes slideInLeft {
+            from {
+                opacity: 0;
+                transform: translateX(-50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        @keyframes slideInRight {
+            from {
+                opacity: 0;
+                transform: translateX(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0px);
+            }
+            50% {
+                transform: translateY(-10px);
+            }
+        }
+
+        .fade-in-up {
+            animation: fadeInUp 0.8s ease-out;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .nav-menu {
+                position: fixed;
+                top: 70px;
+                left: -100%;
+                width: 100%;
+                height: calc(100vh - 70px);
+                background: white;
+                flex-direction: column;
+                justify-content: flex-start;
+                padding-top: 2rem;
+                transition: var(--transition);
+                box-shadow: 0 4px 20px var(--shadow);
+            }
+
+            .nav-menu.active {
+                left: 0;
+            }
+
+            .mobile-menu-btn {
+                display: block;
+            }
+
+            .hero-content {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+
+            .diagonal-content {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+
+            .hero-buttons {
+                justify-content: center;
+            }
+
+            .card-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Utility Classes */
+        .text-center { text-align: center; }
+        .text-primary { color: var(--primary); }
+        .bg-surface { background: var(--surface); }
+        .mb-2 { margin-bottom: 0.5rem; }
+        .mb-4 { margin-bottom: 1rem; }
+        .mt-4 { margin-top: 1rem; }
+        .py-4 { padding: 1rem 0; }
+        .px-4 { padding: 0 1rem; }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar" id="navbar">
+        <div class="nav-container">
+            <a href="#home" class="logo">
+                <img src="images/logo.jpeg" alt="Smartees Logo">
+                <span>Smartees Montessori</span>
+            </a>
+            
+            <ul class="nav-menu" id="nav-menu">
+                <li><a href="#home" class="nav-link active">Home</a></li>
+                <li><a href="#about" class="nav-link">About</a></li>
+                <li><a href="#academics" class="nav-link">Academics</a></li>
+                <li><a href="#admissions" class="nav-link">Admissions</a></li>
+                <li><a href="#departments" class="nav-link">Departments</a></li>
+                <li><a href="#gallery" class="nav-link">Gallery</a></li>
+                <li><a href="#news" class="nav-link">News</a></li>
+                <li><a href="#contact" class="nav-link">Contact</a></li>
+            </ul>
+            
+            <button class="mobile-menu-btn" id="mobile-menu-btn">☰</button>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <div class="hero-text">
+                    <h1 class="hero-title">Welcome to Smartees Montessori School</h1>
+                    <p class="hero-subtitle">Good Foundation, Skills, Great Future - Nurturing young minds with quality Montessori education in Elmina</p>
+                    <div class="hero-buttons">
+                        <a href="#admissions" class="btn btn-primary">Enroll Your Child Today</a>
+                        <a href="#contact" class="btn btn-outline">Schedule a Visit</a>
+                    </div>
+                </div>
+                <div class="hero-image">
+                    <img src="images/work.jpeg" alt="Students Learning">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Stats Section -->
+    <section class="stats-section">
+        <div class="container">
+            <h2>Why Parents Choose Smartees</h2>
+            <div class="stats-grid">
+                <div class="stat-item">
+                    <div class="stat-number">18+</div>
+                    <div class="stat-label">Years of Excellence</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">200+</div>
+                    <div class="stat-label">Happy Students</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">25+</div>
+                    <div class="stat-label">Qualified Teachers</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">98%</div>
+                    <div class="stat-label">Parent Satisfaction</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Image Slider -->
+    <section class="container">
+        <div class="slider-container">
+            <div class="slider-track" id="slider-track">
+                <div class="slide" style="background-image: url('images/work.jpeg');">
+                    <div class="slide-content">
+                        <h3>Student Activities</h3>
+                        <p>Our students engage in various activities that promote learning and fun</p>
+                    </div>
+                </div>
+                <div class="slide" style="background-image: url('images/culture_1.jpeg');">
+                    <div class="slide-content">
+                        <h3>Cultural Events</h3>
+                        <p>Celebrating Ghanaian culture and traditions</p>
+                    </div>
+                </div>
+                <div class="slide" style="background-image: url('images/excursion.jpeg');">
+                    <div class="slide-content">
+                        <h3>Excursions</h3>
+                        <p>Learning outside the classroom through field trips</p>
+                    </div>
+                </div>
+                <div class="slide" style="background-image: url('images/group.jpeg');">
+                    <div class="slide-content">
+                        <h3>Group Activities</h3>
+                        <p>Teamwork and collaboration in action</p>
+                    </div>
+                </div>
+            </div>
+            <div class="slider-nav">
+                <div class="slider-dot active" data-slide="0"></div>
+                <div class="slider-dot" data-slide="1"></div>
+                <div class="slider-dot" data-slide="2"></div>
+                <div class="slider-dot" data-slide="3"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="container py-4">
+        <div class="card-grid">
+            <div class="card text-center fade-in-up">
+                <div class="feature-icon">🎓</div>
+                <h4>Quality Education</h4>
+                <p>Montessori approach with Ghana Education Service curriculum</p>
+            </div>
+            <div class="card text-center fade-in-up">
+                <div class="feature-icon">👥</div>
+                <h4>Experienced Teachers</h4>
+                <p>Qualified and dedicated teaching staff</p>
+            </div>
+            <div class="card text-center fade-in-up">
+                <div class="feature-icon">🏫</div>
+                <h4>Modern Facilities</h4>
+                <p>State-of-the-art classrooms and learning resources</p>
+            </div>
+            <div class="card text-center fade-in-up">
+                <div class="feature-icon">❤️</div>
+                <h4>Nurturing Environment</h4>
+                <p>Safe and caring atmosphere for every child</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section with Diagonal Layout -->
+    <section id="about" class="diagonal-section">
+        <div class="container">
+            <h2 class="section-title">About Our School</h2>
+            <div class="diagonal-content">
+                <div class="diagonal-image">
+                    <img src="images/her.jpeg" alt="School Building">
+                </div>
+                <div>
+                    <h3 class="text-primary">Our History</h3>
+                    <p>Established in 2005, Smartees Montessori School began as a small learning center with just 15 students and 2 teachers. Founded by Mrs. Abigail Mensah, an education enthusiast with a vision for quality early childhood education in Elmina.</p>
+                    <p>In 2010, we moved to our current purpose-built campus at Nippon Junction, featuring modern classrooms, a library, computer lab, and expansive playgrounds. Today, we serve over 200 students from Kindergarten to Class 6, with a team of 25 dedicated staff members.</p>
+                    <a href="#contact" class="btn btn-primary">Learn More</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Mission & Vision -->
+    <section class="container py-4">
+        <div class="diagonal-content reverse">
+            <div>
+                <h3 class="text-primary">Our Mission & Vision</h3>
+                <div class="card mb-4">
+                    <h4>🎯 Our Mission</h4>
+                    <p>To provide quality education that empowers students to achieve their full potential academically, socially, and emotionally, preparing them for future academic success and lifelong learning.</p>
+                </div>
+                <div class="card">
+                    <h4>👁️ Our Vision</h4>
+                    <p>To be the leading Montessori institution in the Central Region, recognized for excellence in early childhood education and for developing well-rounded, confident, and responsible individuals.</p>
+                </div>
+            </div>
+            <div class="diagonal-image">
+                <img src="images/batch.jpeg" alt="Students Learning">
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials Section -->
+    <section class="diagonal-section">
+        <div class="container">
+            <h2 class="section-title">What Parents Say</h2>
+            <div class="card-grid">
+                <div class="card">
+                    <div class="testimonial">
+                        <div class="testimonial-content">
+                            "My daughter has blossomed at Smartees. The teachers are attentive and caring, and the Montessori approach has helped her develop independence and a love for learning."
+                        </div>
+                        <div class="testimonial-author">- Mrs. Adwoa Mensah, Parent</div>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="testimonial">
+                        <div class="testimonial-content">
+                            "The school's focus on both academic excellence and character development is impressive. My son is not only doing well academically but has also become more confident and responsible."
+                        </div>
+                        <div class="testimonial-author">- Mr. Kwame Asante, Parent</div>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="testimonial">
+                        <div class="testimonial-content">
+                            "The facilities at Smartees are excellent, and the teachers go above and beyond to ensure each child receives personalized attention. Highly recommended!"
+                        </div>
+                        <div class="testimonial-author">- Mrs. Akua Boateng, Parent</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Academics Section -->
+    <section id="academics" class="diagonal-section">
+        <div class="container">
+            <h2 class="section-title">Academic Programs</h2>
+            <div class="card-grid">
+                <div class="card">
+                    <h4 class="text-primary">Kindergarten (KG1 & KG2)</h4>
+                    <p><strong>Ages:</strong> 3-5 years</p>
+                    <ul>
+                        <li>Language and literacy development</li>
+                        <li>Numeracy and basic mathematics</li>
+                        <li>Environmental studies</li>
+                        <li>Creative arts and music</li>
+                        <li>Physical development</li>
+                        <li>Practical life skills</li>
+                        <li>Sensorial activities</li>
+                    </ul>
+                </div>
+                <div class="card">
+                    <h4 class="text-primary">Lower Primary (Class 1-3)</h4>
+                    <p><strong>Ages:</strong> 6-8 years</p>
+                    <ul>
+                        <li>English Language</li>
+                        <li>Mathematics</li>
+                        <li>Integrated Science</li>
+                        <li>Ghanaian Language (Fante)</li>
+                        <li>Social Studies</li>
+                        <li>Creative Arts</li>
+                        <li>Religious & Moral Education</li>
+                    </ul>
+                </div>
+                <div class="card">
+                    <h4 class="text-primary">Upper Primary (Class 4-6)</h4>
+                    <p><strong>Ages:</strong> 9-12 years</p>
+                    <ul>
+                        <li>English Language</li>
+                        <li>Mathematics</li>
+                        <li>Integrated Science</li>
+                        <li>ICT</li>
+                        <li>French</li>
+                        <li>Physical Education</li>
+                        <li>History & Geography</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Admissions Section -->
+    <section id="admissions" class="container py-4">
+        <h2 class="section-title">Admissions Process</h2>
+        <div class="diagonal-content">
+            <div class="diagonal-image">
+                <img src="images/WhatsApp Image 2025-08-27 at 10.40.09 AM.jpeg" alt="Admissions">
+            </div>
+            <div>
+                <h3 class="text-primary">How to Apply</h3>
+                <div class="card">
+                    <h4>📝 Application Methods</h4>
+                    <ol>
+                        <li><strong>In-Person:</strong> Visit our school for a tour and complete application</li>
+                        <li><strong>Download Form:</strong> Get our application form online</li>
+                        <li><strong>Online Application:</strong> Apply directly through our website</li>
+                    </ol>
+                    
+                    <h4 class="mt-4">📋 Required Documents</h4>
+                    <ul>
+                        <li>Birth Certificate</li>
+                        <li>Two passport-sized photographs</li>
+                        <li>Previous school report (if applicable)</li>
+                        <li>Medical records</li>
+                    </ul>
+                    
+                    <h4 class="mt-4">💰 Fee Structure</h4>
+                    <p>We offer competitive fees with flexible payment plans. Contact us for detailed information about our fee structure.</p>
+                    
+                    <div class="mt-4">
+                        <a href="#contact" class="btn btn-primary">Start Application</a>
+                        <a href="#" class="btn btn-outline">Download Form</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Departments Section -->
+    <section id="departments" class="diagonal-section">
+        <div class="container">
+            <h2 class="section-title">Academic Departments</h2>
+            <div class="card-grid">
+                <div class="card">
+                    <div class="feature-icon">📚</div>
+                    <h4>Languages Department</h4>
+                    <p><strong>Subjects:</strong> English, Fante, French</p>
+                    <ul>
+                        <li>Reading Club</li>
+                        <li>Debate Society</li>
+                        <li>Spelling Bee Competitions</li>
+                        <li>Creative Writing Workshops</li>
+                    </ul>
+                </div>
+                <div class="card">
+                    <div class="feature-icon">🔢</div>
+                    <h4>Mathematics Department</h4>
+                    <p><strong>Subjects:</strong> Mathematics</p>
+                    <ul>
+                        <li>Math Olympiad Club</li>
+                        <li>Mental Math Competitions</li>
+                        <li>STEM Integration Projects</li>
+                        <li>Math Games & Puzzles</li>
+                    </ul>
+                </div>
+                <div class="card">
+                    <div class="feature-icon">🔬</div>
+                    <h4>Science Department</h4>
+                    <p><strong>Subjects:</strong> Integrated Science</p>
+                    <ul>
+                        <li>Science Club</li>
+                        <li>Science Fair Projects</li>
+                        <li>Gardening Club</li>
+                        <li>Environmental Awareness Programs</li>
+                    </ul>
+                </div>
+                <div class="card">
+                    <div class="feature-icon">💻</div>
+                    <h4>ICT Department</h4>
+                    <p><strong>Subjects:</strong> Information Technology</p>
+                    <ul>
+                        <li>Coding Club</li>
+                        <li>Robotics Workshops</li>
+                        <li>Digital Literacy Programs</li>
+                        <li>Technology Competitions</li>
+                    </ul>
+                </div>
+                <div class="card">
+                    <div class="feature-icon">🎨</div>
+                    <h4>Creative Arts Department</h4>
+                    <p><strong>Subjects:</strong> Music, Visual Arts, Drama</p>
+                    <ul>
+                        <li>School Choir</li>
+                        <li>Art Club</li>
+                        <li>Cultural Dance Troupe</li>
+                        <li>Annual Art Exhibition</li>
+                    </ul>
+                </div>
+                <div class="card">
+                    <div class="feature-icon">⚽</div>
+                    <h4>Physical Education</h4>
+                    <p><strong>Subjects:</strong> Physical Education</p>
+                    <ul>
+                        <li>Football Team</li>
+                        <li>Athletics Club</li>
+                        <li>Annual Sports Day</li>
+                        <li>Health & Wellness Programs</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Gallery Section -->
+    <section id="gallery" class="container py-4">
+        <h2 class="section-title">School Gallery</h2>
+        <div class="card-grid">
+            <div class="card">
+                <img src="images/work.jpeg" alt="Classroom" style="width: 100%; height: 200px; object-fit: cover; border-radius: 0.5rem; margin-bottom: 1rem;">
+                <h4>Modern Classrooms</h4>
+                <p>State-of-the-art learning environments</p>
+            </div>
+            <div class="card">
+                <img src="images/group.jpeg" alt="Activities" style="width: 100%; height: 200px; object-fit: cover; border-radius: 0.5rem; margin-bottom: 1rem;">
+                <h4>Group Activities</h4>
+                <p>Collaborative learning experiences</p>
+            </div>
+            <div class="card">
+                <img src="images/culture_1.jpeg" alt="Cultural Events" style="width: 100%; height: 200px; object-fit: cover; border-radius: 0.5rem; margin-bottom: 1rem;">
+                <h4>Cultural Events</h4>
+                <p>Celebrating Ghanaian heritage</p>
+            </div>
+            <div class="card">
+                <img src="images/excursion.jpeg" alt="Excursions" style="width: 100%; height: 200px; object-fit: cover; border-radius: 0.5rem; margin-bottom: 1rem;">
+                <h4>Educational Excursions</h4>
+                <p>Learning beyond the classroom</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- News Section -->
+    <section id="news" class="diagonal-section">
+        <div class="container">
+            <h2 class="section-title">Latest News & Events</h2>
+            <div class="card-grid">
+                <div class="card">
+                    <h4 class="text-primary">🎓 Graduation Ceremony 2024</h4>
+                    <p><strong>Date:</strong> July 25, 2024</p>
+                    <p>Join us as we celebrate our Class 6 students moving on to Junior High School. Special guests and performances by our students.</p>
+                    <a href="#" class="btn btn-outline">Read More</a>
+                </div>
+                <div class="card">
+                    <h4 class="text-primary">🏆 Inter-School Sports Competition</h4>
+                    <p><strong>Date:</strong> June 15-17, 2024</p>
+                    <p>Our students will participate in the annual inter-school sports competition at Elmina Sports Stadium.</p>
+                    <a href="#" class="btn btn-outline">Read More</a>
+                </div>
+                <div class="card">
+                    <h4 class="text-primary">📚 Parent-Teacher Conference</h4>
+                    <p><strong>Date:</strong> May 30, 2024</p>
+                    <p>Meet with teachers to discuss your child's progress. Appointments available throughout the day.</p>
+                    <a href="#" class="btn btn-outline">Read More</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="container py-4">
+        <h2 class="section-title">Contact Us</h2>
+        <div class="diagonal-content">
+            <div>
+                <h3 class="text-primary">Get In Touch</h3>
+                <div class="card">
+                    <h4>📍 Location</h4>
+                    <p>Nippon Junction, Elmina, Central Region, Ghana</p>
+                    
+                    <h4 class="mt-4">📞 Phone Numbers</h4>
+                    <p>+233 24 123 4567 (Administration)</p>
+                    <p>+233 20 987 6543 (Admissions)</p>
+                    
+                    <h4 class="mt-4">✉️ Email</h4>
+                    <p>info@smarteesmontessori.edu.gh</p>
+                    <p>admissions@smarteesmontessori.edu.gh</p>
+                    
+                    <h4 class="mt-4">🕒 School Hours</h4>
+                    <p>Monday - Friday: 7:30 AM - 3:30 PM</p>
+                    <p>Saturday: 8:00 AM - 12:00 PM (Extra Classes)</p>
+                </div>
+            </div>
+            <div>
+                <div class="card">
+                    <h4 class="text-primary">Send Us a Message</h4>
+                    <form id="contact-form">
+                        <div class="form-group">
+                            <label class="form-label" for="name">Full Name</label>
+                            <input type="text" id="name" class="form-input" required>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label" for="email">Email Address</label>
+                            <input type="email" id="email" class="form-input" required>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label" for="phone">Phone Number</label>
+                            <input type="tel" id="phone" class="form-input">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label" for="message">Message</label>
+                            <textarea id="message" class="form-input" rows="5" required></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Send Message</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Map Section -->
+    <section class="container py-4">
+        <h3 class="section-title">Find Our Location</h3>
+        <div class="map-container">
+            <div id="map"></div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h4>Smartees Montessori</h4>
+                    <p>Providing quality education in Elmina since 2005. Good Foundation, Skills, Great Future.</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Quick Links</h4>
+                    <ul class="footer-links">
+                        <li><a href="#home">Home</a></li>
+                        <li><a href="#about">About Us</a></li>
+                        <li><a href="#academics">Academics</a></li>
+                        <li><a href="#admissions">Admissions</a></li>
+                        <li><a href="#contact">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Programs</h4>
+                    <ul class="footer-links">
+                        <li><a href="#academics">Kindergarten</a></li>
+                        <li><a href="#academics">Lower Primary</a></li>
+                        <li><a href="#academics">Upper Primary</a></li>
+                        <li><a href="#departments">Extracurricular</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Connect With Us</h4>
+                    <ul class="footer-links">
+                        <li><a href="#">Facebook</a></li>
+                        <li><a href="#">Instagram</a></li>
+                        <li><a href="#">Twitter</a></li>
+                        <li><a href="#">YouTube</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="text-center" style="border-top: 1px solid rgba(255,255,255,0.1); padding-top: 1rem;">
+                <p>&copy; 2024 Smartees Montessori School. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script>
+        // Mobile Menu Toggle
+        const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+        const navMenu = document.getElementById('nav-menu');
+        
+        mobileMenuBtn.addEventListener('click', () => {
+            navMenu.classList.toggle('active');
+        });
+        
+        // Close mobile menu when clicking on a link
+        document.querySelectorAll('.nav-link').forEach(link => {
+            link.addEventListener('click', () => {
+                navMenu.classList.remove('active');
+            });
+        });
+        
+        // Navbar scroll effect
+        window.addEventListener('scroll', () => {
+            const navbar = document.getElementById('navbar');
+            if (window.scrollY > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+        
+        // Image Slider
+        const sliderTrack = document.getElementById('slider-track');
+        const dots = document.querySelectorAll('.slider-dot');
+        let currentSlide = 0;
+        
+        function showSlide(index) {
+            if (index < 0) index = 3;
+            if (index > 3) index = 0;
+            
+            sliderTrack.style.transform = `translateX(-${index * 100}%)`;
+            
+            dots.forEach(dot => dot.classList.remove('active'));
+            dots[index].classList.add('active');
+            
+            currentSlide = index;
+        }
+        
+        dots.forEach(dot => {
+            dot.addEventListener('click', () => {
+                const slideIndex = parseInt(dot.getAttribute('data-slide'));
+                showSlide(slideIndex);
+            });
+        });
+        
+        // Auto slide
+        setInterval(() => {
+            showSlide(currentSlide + 1);
+        }, 5000);
+        
+        // Contact Form Submission
+        document.getElementById('contact-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            alert('Thank you for your message! We will get back to you soon.');
+            this.reset();
+        });
+        
+        // Initialize Map
+        function initMap() {
+            // Coordinates for Elmina, Ghana (approximate location)
+            const elmina = { lat: 5.0847, lng: -1.3500 };
+            
+            // Create map
+            const map = L.map('map').setView(elmina, 15);
+            
+            // Add tile layer (OpenStreetMap)
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                attribution: '© OpenStreetMap contributors'
+            }).addTo(map);
+            
+            // Add marker
+            L.marker(elmina).addTo(map)
+                .bindPopup('<b>Smartees Montessori School</b><br>Nippon Junction, Elmina')
+                .openPopup();
+        }
+        
+        // Initialize map when page loads
+        window.addEventListener('load', initMap);
+        
+        // Scroll animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+        
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('fade-in-up');
+                }
+            });
+        }, observerOptions);
+        
+        document.querySelectorAll('.card, .section-title').forEach(el => {
+            observer.observe(el);
+        });
+        
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                if (targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if (targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+</html>

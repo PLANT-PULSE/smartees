@@ -1,0 +1,1854 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smartees Montessori School - Quality Education in Elmina</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+    <style>
+        :root {
+            --primary: #1a4f8e;
+            --primary-light: #4a76b1;
+            --primary-dark: #0d2b56;
+            --light: #f8f9fa;
+            --dark: #212529;
+            --accent: #e0f0ff;
+            --btn-hover: #0b2a5a;
+            --shadow-color: rgba(26, 79, 142, 0.3);
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: #333;
+            scroll-behavior: smooth;
+            background-color: var(--light);
+        }
+        
+        .bg-primary {
+            background-color: var(--primary) !important;
+            box-shadow: 0 4px 15px var(--shadow-color);
+        }
+        
+        .btn-primary {
+            background-color: var(--primary);
+            border-color: var(--primary);
+            transition: background-color 0.3s ease, box-shadow 0.3s ease;
+            box-shadow: 0 4px 10px var(--shadow-color);
+        }
+        
+        .btn-primary:hover, .btn-primary:focus {
+            background-color: var(--btn-hover);
+            border-color: var(--btn-hover);
+            box-shadow: 0 6px 20px var(--shadow-color);
+        }
+        
+        .btn-outline-primary {
+            color: var(--primary);
+            border-color: var(--primary);
+            transition: color 0.3s ease, border-color 0.3s ease;
+        }
+        
+        .btn-outline-primary:hover, .btn-outline-primary:focus {
+            color: var(--btn-hover);
+            border-color: var(--btn-hover);
+            background-color: var(--accent);
+        }
+        
+        .text-primary {
+            color: var(--primary) !important;
+        }
+        
+        /* Progress Bar Styles */
+        #progress-bar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 6px;
+            background-color: #e0e0e0;
+            z-index: 9999;
+            box-shadow: 0 2px 8px var(--shadow-color);
+        }
+        
+        #progress-bar .progress-bar-fill {
+            height: 100%;
+            width: 0%;
+            background-color: var(--primary);
+            transition: width 0.25s ease-out;
+            box-shadow: 0 0 10px var(--primary);
+        }
+        
+        .hero-section {
+            position: relative;
+            min-height: 50vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            color: white;
+            margin-bottom: 40px;
+            animation: fadeInDown 1s ease forwards;
+        }
+
+        .hero-video {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: -2;
+            filter: brightness(0.7);
+            transition: filter 0.5s ease;
+        }
+
+        .hero-video:hover {
+            filter: brightness(1);
+        }
+
+        .hero-section .overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(26, 79, 142, 0.7);
+            z-index: -1;
+            animation: fadeIn 1.5s ease forwards;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 5;
+            padding: 120px 0;
+            text-align: center;
+            animation: fadeInUp 1.5s ease forwards;
+        }
+
+        /* School Name Styling */
+        .school-name {
+            font-size: 4rem;
+            font-weight: 900;
+            color: #fff;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            text-shadow: 4px 6px 12px rgba(0,0,0,0.8);
+            animation: pulse 3s infinite;
+        }
+        
+        .page-section {
+            padding: 80px 0;
+            animation: fadeInUp 1s ease forwards;
+        }
+        
+        .section-title {
+            position: relative;
+            margin-bottom: 40px;
+            padding-bottom: 15px;
+            font-weight: 700;
+            color: var(--primary);
+            animation: slideInLeft 1s ease forwards;
+        }
+        
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 80px;
+            height: 4px;
+            background-color: var(--primary);
+            border-radius: 2px;
+        }
+        
+        .card {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            margin-bottom: 25px;
+            border: none;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px var(--shadow-color);
+            background-color: white;
+        }
+        
+        .card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 15px 30px var(--shadow-color);
+        }
+        
+        .news-ticker {
+            background-color: var(--light);
+            padding: 15px 0;
+            border-bottom: 2px solid var(--primary);
+            animation: slideInDown 1s ease forwards;
+        }
+        
+        .teacher-card img {
+            height: 250px;
+            object-fit: cover;
+            width: 100%;
+            border-radius: 12px;
+            transition: transform 0.5s ease;
+        }
+        
+        .teacher-card img:hover {
+            transform: scale(1.05);
+            box-shadow: 0 10px 20px var(--shadow-color);
+        }
+        
+        .gallery-img {
+            margin-bottom: 25px;
+            overflow: hidden;
+            border-radius: 12px;
+            box-shadow: 0 5px 15px var(--shadow-color);
+            transition: box-shadow 0.3s ease;
+        }
+        
+        .gallery-img img {
+            transition: transform 0.5s ease;
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+        }
+        
+        .gallery-img:hover {
+            box-shadow: 0 15px 30px var(--shadow-color);
+        }
+        
+        .gallery-img:hover img {
+            transform: scale(1.1);
+        }
+        
+        .testimonial {
+            background: linear-gradient(135deg, var(--light) 0%, #ffffff 100%);
+            padding: 35px;
+            border-radius: 15px;
+            margin-bottom: 35px;
+            border-left: 4px solid var(--primary);
+            box-shadow: 0 5px 15px var(--shadow-color);
+            animation: fadeIn 1s ease forwards;
+        }
+        
+        .testimonial img {
+            width: 90px;
+            height: 90px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-right: 20px;
+            border: 4px solid var(--primary);
+            transition: box-shadow 0.3s ease;
+        }
+        
+        .testimonial img:hover {
+            box-shadow: 0 0 15px var(--primary);
+        }
+        
+        footer {
+            background: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary) 100%);
+            color: white;
+            padding: 80px 0 30px;
+            box-shadow: 0 -4px 15px var(--shadow-color);
+        }
+        
+        .social-links a {
+            color: white;
+            font-size: 28px;
+            margin-right: 20px;
+            transition: all 0.3s ease;
+        }
+        
+        .social-links a:hover {
+            color: var(--primary);
+            transform: translateY(-3px);
+        }
+        
+        .quick-links a {
+            color: rgba(255, 255, 255, 0.9);
+            text-decoration: none;
+            display: block;
+            margin-bottom: 12px;
+            transition: all 0.3s ease;
+            padding: 5px 0;
+        }
+        
+        .quick-links a:hover {
+            color: var(--primary);
+            text-decoration: none;
+            transform: translateX(5px);
+        }
+        
+        /* Image Slider */
+        .slider-container {
+            position: relative;
+            width: 100%;
+            height: 500px;
+            overflow: hidden;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px var(--shadow-color);
+            margin-bottom: 40px;
+            animation: fadeIn 1s ease forwards;
+        }
+        
+        .slide {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            transition: opacity 1s ease;
+            background-size: cover;
+            background-position: center;
+        }
+        
+        .slide.active {
+            opacity: 1;
+        }
+        
+        .slide-content {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            padding: 30px;
+            background: linear-gradient(transparent, rgba(0, 0, 0, 0.8));
+            color: white;
+            animation: slideInUp 1s ease forwards;
+        }
+        
+        .slider-nav {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            z-index: 10;
+        }
+        
+        .slider-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.5);
+            margin: 0 5px;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+        
+        .slider-dot.active {
+            background: white;
+        }
+        
+        /* Hidden class for toggling */
+        .hidden {
+            display: none;
+        }
+
+        /* Equal height for news images */
+        .card-img-top {
+            height: 200px;
+            object-fit: cover;
+        }
+
+        /* Responsive improvements */
+        @media (max-width: 768px) {
+            .hero-section {
+                padding: 80px 0;
+            }
+            
+            .page-section {
+                padding: 60px 0;
+            }
+            
+            .section-title {
+                font-size: 2rem;
+            }
+            
+            .teacher-card img {
+                height: 200px;
+            }
+            
+            .slider-container {
+                height: 350px;
+            }
+        }
+        
+        /* Dark mode styles */
+        body.dark-mode {
+            background-color: #121212;
+            color: #f1f1f1;
+        }
+        
+        body.dark-mode .card {
+            background-color: #1e1e1e;
+            color: #f1f1f1;
+        }
+        
+        body.dark-mode .testimonial {
+            background: #1e1e1e;
+            color: #f1f1f1;
+        }
+        
+        /* Animation classes */
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        @keyframes fadeInDown {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        @keyframes slideInLeft {
+            from { opacity: 0; transform: translateX(-30px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+        
+        @keyframes slideInDown {
+            from { opacity: 0; transform: translateY(-30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        @keyframes slideInUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+    </style>
+</head>
+<body>
+    <!-- Progress Bar -->
+    <div id="progress-bar" class="progress-bar-container">
+        <div class="progress-bar-fill"></div>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary sticky-top">
+        <div class="container">
+            <a class="navbar-brand d-flex align-items-center" href="#home">
+                <img src="images/logo.jpeg" alt="Smartees Montessori Logo" height="50" class="me-2 rounded-circle border border-white border-2">
+                <span class="fw-bold fs-4 text-white">Smartees Montessori School</span>
+            </a>
+            
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="#home">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#about">About Us</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#academics">Academics</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#admissions">Admissions</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#departments">Departments</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#gallery">Gallery</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#news">News & Events</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#contact">Contact Us</a>
+                    </li>
+                
+                </ul>
+                
+                <!-- Dark Mode Toggle -->
+                <button class="btn btn-outline-light ms-3" id="darkModeToggle">
+                    <i class="bi bi-moon-fill"></i>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- News Ticker -->
+    <div class="news-ticker">
+        <div class="container">
+            <div class="d-flex justify-content-between align-items-center">
+                <small class="fw-bold text-primary">📢 Latest News:</small>
+                <marquee behavior="scroll" direction="left" scrollamount="3">
+                    🎉 Admissions for 2023/2024 Academic Year are now open! | 
+                    📅 Annual Sports Day scheduled for November 15, 2023 | 
+                    🏆 Our students won 3 awards at the Regional Science Fair | 
+                    🌟 New computer lab facilities now available for students |
+                    📚 Parent-Teacher Meeting on November 10, 2023
+                </marquee>
+            </div>
+        </div>
+    </div>
+
+    <!-- Homepage -->
+  <section id="home" class="page-section">
+    <!-- Hero Section -->
+    <div class="hero-section text-center">
+
+        <!-- Background Video (muted autoplay loop) -->
+        <video autoplay muted loop playsinline preload="none" class="hero-video">
+            <source src="images/video.mp4" type="video/mp4">
+            Your browser does not support HTML5 video.
+        </video>
+
+        <!-- Blue Overlay -->
+        <div class="overlay"></div>
+
+        <!-- Content -->
+        <div class="container hero-content">
+            <h1 class="school-name animate__animated animate__zoomInDown">
+                Welcome to <br> Smartees Montessori School
+            </h1>
+            <p class="lead fs-4 mb-4 animate__animated animate__fadeInUp animate__delay-1s">
+                Good Foundation, Skills, Great Future
+            </p>
+            <div class="d-flex justify-content-center gap-3 flex-wrap animate__animated animate__fadeInUp animate__delay-2s">
+                <a href="#admissions" class="btn btn-primary btn-lg px-4 py-2 shadow-lg rounded-pill">
+                    Enroll Your Child Today
+                </a>
+                <a href="#contact" class="btn btn-outline-light btn-lg px-4 py-2 shadow-lg rounded-pill">
+                    Schedule a Visit
+                </a>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+
+
+
+        <!-- Image Slider -->
+        <div class="container mb-5">
+            <div class="slider-container">
+                <div class="slide active" style="background-image: url('images/work.jpeg');">
+                    <div class="slide-content">
+                        <h2>Modern Learning Environment</h2>
+                        <p>Our classrooms are designed to inspire creativity and learning</p>
+                    </div>
+                </div>
+                <div class="slide" style="background-image: url('images/her_2.jpeg');">
+                    <div class="slide-content">
+                        <h2>Interactive Learning</h2>
+                        <p>Students engage in hands-on activities that make learning fun</p>
+                    </div>
+                </div>
+                <div class="slide" style="background-image: url('images/her.jpeg');">
+                    <div class="slide-content">
+                        <h2>Sports & Activities</h2>
+                        <p>We encourage physical development through various sports</p>
+                    </div>
+                </div>
+                <div class="slide" style="background-image: url('images/culture_1.jpeg');">
+                    <div class="slide-content">
+                        <h2>Cultural activiies</h2>
+                        <p>We also teach the kids the rich Ghanaian cultural dance.</p>
+                    </div>
+                </div>
+                <div class="slider-nav">
+                    <div class="slider-dot active"></div>
+                    <div class="slider-dot"></div>
+                    <div class="slider-dot"></div>
+                    <div class="slider-dot"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Quick Highlights -->
+        <div class="container mb-5">
+            <div class="row">
+                <div class="col-md-3 mb-4">
+                    <div class="card border-0 shadow-lg h-100">
+                        <div class="card-body text-center p-4">
+                            <i class="bi bi-mortarboard-fill display-4 text-primary mb-3"></i>
+                            <h4 class="mb-3">Quality Education</h4>
+                            <p class="text-muted">Montessori approach with Ghana Education Service curriculum</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3 mb-4">
+                    <div class="card border-0 shadow-lg h-100">
+                        <div class="card-body text-center p-4">
+                            <i class="bi bi-people-fill display-4 text-primary mb-3"></i>
+                            <h4 class="mb-3">Experienced Teachers</h4>
+                            <p class="text-muted">Qualified and dedicated teaching staff</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3 mb-4">
+                    <div class="card border-0 shadow-lg h-100">
+                        <div class="card-body text-center p-4">
+                            <i class="bi bi-house-heart-fill display-4 text-primary mb-3"></i>
+                            <h4 class="mb-3">Modern Facilities</h4>
+                            <p class="text-muted">State-of-the-art classrooms and learning resources</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3 mb-4">
+                    <div class="card border-0 shadow-lg h-100">
+                        <div class="card-body text-center p-4">
+                            <i class="bi bi-trophy-fill display-4 text-primary mb-3"></i>
+                            <h4 class="mb-3">Award Winning</h4>
+                            <p class="text-muted">Multiple awards in academics and extracurriculars</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Welcome Message -->
+        <div class="bg-light py-5">
+            <div class="container">
+                <div class="row align-items-center">
+                    <div class="col-lg-6">
+                        <h2 class="section-title">Message from Our Headteacher</h2>
+                        <p class="lead text-primary">Welcome to Smartees Montessori School, where we believe in nurturing each child's unique potential.</p>
+                        <p>At Smartees, we provide a stimulating Montessori environment that encourages children to explore, discover, and learn at their own pace. Our experienced teachers are dedicated to helping each child develop academically, socially, and emotionally.</p>
+                        <p>We combine the best of Montessori methods with the Ghana Education Service curriculum to create a well-rounded educational experience that prepares children for future success.</p>
+                        <p class="fw-bold mt-4">Mrs.Ohenaba Ashun Cobbina<br><span class="text-muted">Headmistress</span></p>
+                    </div>
+                    <div class="col-lg-6">
+                        <img src="images/her.jpeg" alt="Headteacher" class="img-fluid rounded-3 shadow-lg">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Call to Action -->
+        <div class="bg-primary text-white text-center py-5">
+            <div class="container">
+                <h2 class="display-5 fw-bold mb-4">Ready to Give Your Child the Best Educational Foundation?</h2>
+                <p class="lead mb-4">Join our community of learners and watch your child thrive in our nurturing environment.</p>
+                <div class="d-flex justify-content-center gap-3 flex-wrap">
+                    <a href="#admissions" class="btn btn-light btn-lg px-4 py-2">Apply Now</a>
+                    <a href="#contact" class="btn btn-outline-light btn-lg px-4 py-2">Schedule a Visit</a>
+                    <a href="#about" class="btn btn-outline-light btn-lg px-4 py-2">Learn More</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Us Section -->
+    <section id="about" class="page-section bg-light">
+        <div class="container">
+            <h2 class="section-title">About Our School</h2>
+            
+            <!-- History -->
+            <div class="row mb-5">
+                <div class="col-lg-8 mx-auto">
+                    <h3 class="text-primary mb-4">Our History</h3>
+                    <p class="lead">Established in 2005, Smartees Montessori School began as a small learning center with just 15 students and 2 teachers. Founded by Mrs. Oheneba Eshun Cobbinah , an education enthusiast with a vision for quality early childhood education in Elmina.</p>
+                    <p>In 2010, we moved to our current purpose-built campus at Nippon Junction, featuring modern classrooms, a library, computer lab, and expansive playgrounds. Today, we serve over 200 students from Kindergarten to Class 6, with a team of 25 dedicated staff members.</p>
+                    <p>Throughout our journey, we have maintained our commitment to providing Montessori-inspired education that fosters independence, creativity, and love for learning in every child.</p>
+                </div>
+            </div>
+
+            <!-- Mission & Vision -->
+            <div class="row mb-5">
+                <div class="col-md-6 mb-4">
+                    <div class="card h-100 border-0 shadow-sm">
+                        <div class="card-body text-center p-4">
+                            <i class="bi bi-bullseye display-4 text-primary mb-3"></i>
+                            <h3>Our Mission</h3>
+                            <p>To provide quality education that empowers students to achieve their full potential academically, socially, and emotionally, preparing them for future academic success and lifelong learning.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 mb-4">
+                    <div class="card h-100 border-0 shadow-sm">
+                        <div class="card-body text-center p-4">
+                            <i class="bi bi-eye-fill display-4 text-primary mb-3"></i>
+                            <h3>Our Vision</h3>
+                            <p>To be the leading Montessori institution in the Central Region, recognized for excellence in early childhood education and for developing well-rounded, confident, and responsible individuals.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Core Values -->
+            <div class="row">
+                <div class="col-lg-8 mx-auto">
+                    <h3 class="text-primary mb-4">Our Core Values</h3>
+                    <div class="row">
+                        <div class="col-md-4 mb-3">
+                            <div class="d-flex align-items-center p-3 bg-white rounded shadow-sm">
+                                <i class="bi bi-award-fill text-primary fs-4 me-3"></i>
+                                <span class="fw-bold">Excellence</span>
+                            </div>
+                        </div>
+                        <div class="col-md-4 mb-3">
+                            <div class="d-flex align-items-center p-3 bg-white rounded shadow-sm">
+                                <i class="bi bi-heart-fill text-primary fs-4 me-3"></i>
+                                <span class="fw-bold">Respect</span>
+                            </div>
+                        </div>
+                        <div class="col-md-4 mb-3">
+                            <div class="d-flex align-items-center p-3 bg-white rounded shadow-sm">
+                                <i class="bi bi-shield-check-fill text-primary fs-4 me-3"></i>
+                                <span class="fw-bold">Integrity</span>
+                            </div>
+                        </div>
+                        <div class="col-md-4 mb-3">
+                            <div class="d-flex align-items-center p-3 bg-white rounded shadow-sm">
+                                <i class="bi bi-lightbulb-fill text-primary fs-4 me-3"></i>
+                                <span class="fw-bold">Creativity</span>
+                            </div>
+                        </div>
+                        <div class="col-md-4 mb-3">
+                            <div class="d-flex align-items-center p-3 bg-white rounded shadow-sm">
+                                <i class="bi bi-people-fill text-primary fs-4 me-3"></i>
+                                <span class="fw-bold">Community</span>
+                            </div>
+                        </div>
+                        <div class="col-md-4 mb-3">
+                            <div class="d-flex align-items-center p-3 bg-white rounded shadow-sm">
+                                <i class="bi bi-arrow-through-heart-fill text-primary fs-4 me-3"></i>
+                                <span class="fw-bold">Compassion</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Achievements -->
+            <div class="row mt-5">
+                <div class="col-lg-8 mx-auto">
+                    <h3 class="text-primary mb-4">School Achievements & Milestones</h3>
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <div class="card">
+                                <div class="card-body">
+                                    <h5>🏆 Academic Excellence</h5>
+                                    <p>Consistently top-performing students in regional examinations</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <div class="card">
+                                <div class="card-body">
+                                    <h5>⭐ Sports Champions</h5>
+                                    <p>Multiple awards in inter-school sports competitions</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <div class="card">
+                                <div class="card-body">
+                                    <h5>🎨 Arts & Culture</h5>
+                                    <p>Recognition in regional cultural festivals and art competitions</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <div class="card">
+                                <div class="card-body">
+                                    <h5>🌱 Environmental</h5>
+                                    <p>Green School award for environmental conservation efforts</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Academics Section -->
+    <section id="academics" class="page-section">
+        <div class="container">
+            <h2 class="section-title">Academic Programs</h2>
+            
+            <!-- Curriculum Overview -->
+            <div class="row mb-5">
+                <div class="col-lg-8 mx-auto text-center">
+                    <h3 class="text-primary mb-4">Our Curriculum</h3>
+                    <p class="lead">We follow the Ghana Education Service curriculum enhanced with Montessori principles and methods, providing a balanced education that meets national standards while fostering independence, creativity, and critical thinking skills.</p>
+                </div>
+            </div>
+
+            <!-- Programs by Level -->
+            <div class="row mb-5">
+                <div class="col-md-4 mb-4">
+                    <div class="card h-100">
+                        <div class="card-header bg-primary text-white text-center">
+                            <h4 class="mb-0">Kindergarten (KG1 & KG2)</h4>
+                        </div>
+                        <div class="card-body">
+                            <p><strong>Ages:</strong> 3-5 years</p>
+                            <p><strong>Focus Areas:</strong></p>
+                            <ul>
+                                <li>Language and literacy development</li>
+                                <li>Numeracy and basic mathematics</li>
+                                <li>Environmental studies</li>
+                                <li>Creative arts and music</li>
+                                <li>Physical development</li>
+                                <li>Social and emotional development</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-md-4 mb-4">
+                    <div class="card h-100">
+                        <div class="card-header bg-primary text-white text-center">
+                            <h4 class="mb-0">Lower Primary (Class 1-3)</h4>
+                        </div>
+                        <div class="card-body">
+                            <p><strong>Ages:</strong> 6-8 years</p>
+                            <p><strong>Subjects:</strong></p>
+                            <ul>
+                                <li>English Language</li>
+                                <li>Mathematics</li>
+                                <li>Integrated Science</li>
+                                <li>Ghanaian Language (Fante)</li>
+                                <li>Social Studies</li>
+                                <li>Religious & Moral Education</li>
+                                <li>Physical Education</li>
+                                <li>Creative Arts</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-md-4 mb-4">
+                    <div class="card h-100">
+                        <div class="card-header bg-primary text-white text-center">
+                            <h4 class="mb-0">Upper Primary (Class 4-6)</h4>
+                        </div>
+                        <div class="card-body">
+                            <p><strong>Ages:</strong> 9-12 years</p>
+                            <p><strong>Subjects:</strong></p>
+                            <ul>
+                                <li>English Language</li>
+                                <li>Mathematics</li>
+                                <li>Integrated Science</li>
+                                <li>Ghanaian Language (Fante)</li>
+                                <li>Social Studies</li>
+                                <li>Religious & Moral Education</li>
+                                <li>Information Communication Technology (ICT)</li>
+                                <li>French</li>
+                                <li>Physical Education</li>
+                                <li>Creative Arts and Design</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Teaching Methodology -->
+            <div class="row mb-5">
+                <div class="col-lg-8 mx-auto">
+                    <h3 class="text-primary mb-4">Teaching Approach</h3>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="mb-4">
+                                <h5>Montessori Method</h5>
+                                <ul>
+                                    <li>Child-centered learning environment</li>
+                                    <li>Hands-on learning materials</li>
+                                    <li>Individualized learning pace</li>
+                                    <li>Development of independence</li>
+                                    <li>Mixed-age classroom interactions</li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="mb-4">
+                                <h5>Practical Learning</h5>
+                                <ul>
+                                    <li>Science experiments and demonstrations</li>
+                                    <li>Art and craft activities</li>
+                                    <li>Educational games and puzzles</li>
+                                    <li>Gardening and environmental projects</li>
+                                    <li>Cooking and nutrition activities</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Academic Calendar -->
+            <div class="row">
+                <div class="col-lg-8 mx-auto">
+                    <h3 class="text-primary mb-4">Academic Calendar 2023/2024</h3>
+                    <div class="table-responsive">
+                        <table class="table table-striped">
+                            <thead class="table-primary">
+                                <tr>
+                                    <th>Term</th>
+                                    <th>Duration</th>
+                                    <th>Break</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>First Term</td>
+                                    <td>September 5 - December 15, 2023</td>
+                                    <td>December 18 - January 5</td>
+                                </tr>
+                                <tr>
+                                    <td>Second Term</td>
+                                    <td>January 8 - April 5, 2024</td>
+                                    <td>April 8 - April 26</td>
+                                </tr>
+                                <tr>
+                                    <td>Third Term</td>
+                                    <td>April 29 - July 19, 2024</td>
+                                    <td>July 22 - September 2</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="text-center mt-3">
+                        <a href="#" class="btn btn-primary">
+                            <i class="bi bi-download me-2"></i>Download Full Calendar
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Admissions Section -->
+    <section id="admissions" class="page-section bg-light">
+        <div class="container">
+            <h2 class="section-title">Admissions Process</h2>
+            
+            <!-- Methods to Apply -->
+            <div class="row mb-5">
+                <div class="col-lg-10 mx-auto">
+                    <h3 class="text-primary mb-4">Methods to Apply</h3>
+
+                    <!-- Method 1: In-Person Application -->
+                    <div class="card mb-4">
+                        <div class="card-header bg-primary text-white">
+                            <h4 class="mb-0"><i class="bi bi-person-fill me-2"></i>Method 1: In-Person Application</h4>
+                        </div>
+                        <div class="card-body">
+                            <p class="text-muted mb-3">Visit our school to complete your application in person</p>
+                            <ol class="list-group list-group-numbered">
+                                <li class="list-group-item d-flex align-items-start">
+                                    <div class="ms-2 me-auto">
+                                        <div class="fw-bold">Visit the school for a tour and prospectus</div>
+                                        Schedule a campus tour to experience our environment
+                                    </div>
+                                </li>
+                                <li class="list-group-item d-flex align-items-start">
+                                    <div class="ms-2 me-auto">
+                                        <div class="fw-bold">Complete the application form</div>
+                                        Obtain and fill out the admission form
+                                    </div>
+                                </li>
+                                <li class="list-group-item d-flex align-items-start">
+                                    <div class="ms-2 me-auto">
+                                        <div class="fw-bold">Submit required documents</div>
+                                        Birth certificate, previous school records, medical records, passport photographs
+                                    </div>
+                                </li>
+                                <li class="list-group-item d-flex align-items-start">
+                                    <div class="ms-2 me-auto">
+                                        <div class="fw-bold">Attend an interview</div>
+                                        Meet with the headteacher for assessment
+                                    </div>
+                                </li>
+                                <li class="list-group-item d-flex align-items-start">
+                                    <div class="ms-2 me-auto">
+                                        <div class="fw-bold">Receive admission decision</div>
+                                        Get notified of acceptance status
+                                    </div>
+                                </li>
+                                <li class="list-group-item d-flex align-items-start">
+                                    <div class="ms-2 me-auto">
+                                        <div class="fw-bold">Complete registration</div>
+                                        Pay fees and complete enrollment process
+                                    </div>
+                                </li>
+                            </ol>
+                        </div>
+                    </div>
+
+                    <!-- Method 2: Download Application Form -->
+                    <div class="card mb-4">
+                        <div class="card-header bg-success text-white">
+                            <h4 class="mb-0"><i class="bi bi-download me-2"></i>Method 2: Download Application Form</h4>
+                        </div>
+                        <div class="card-body">
+                            <p class="text-muted mb-3">Download, print, and submit the application form at your convenience</p>
+                            <div class="text-center">
+                                <a href="images/application_form (1).pdf"
+                                   download="smartees_application_form.pdf"
+                                   onclick="showDownloadMessage()"
+                                   class="btn btn-success btn-lg">
+                                    <i class="bi bi-download me-2"></i>Download Application Form
+                                </a>
+                                <div id="downloadMessage" class="alert alert-success mt-3 d-none" role="alert">
+                                    <i class="bi bi-check-circle-fill me-2"></i>
+                                    Application form has been successfully downloaded!<br>
+                                    <strong>Next steps:</strong> Print the form, fill it out completely, and submit it to the school office.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                 
+                    <!-- Method 3: Apply Online -->
+<div class="card mb-4">
+  <div class="card-header bg-info text-white">
+    <h4 class="mb-0"><i class="bi bi-globe me-2"></i>Method 3: Apply Online</h4>
+  </div>
+  <div class="card-body">
+    <p class="text-muted mb-3">Complete your application online and we'll get back to you</p>
+
+    <!-- Apply Online Button -->
+    <div class="text-center mb-3">
+      <button id="showOnlineForm" class="btn btn-info btn-lg">
+        <i class="bi bi-pencil-square me-2"></i>Apply Online
+      </button>
+    </div>
+
+    <!-- Online Application Form Container (Hidden Initially) -->
+    <div id="onlineFormContainer" class="d-none">
+      <form id="onlineApplicationForm" action="https://formsubmit.co/oheneba514@yahoo.com" method="POST">
+        <!-- Hidden fields for form configuration -->
+        <input type="hidden" name="_captcha" value="false">
+        <input type="hidden" name="_next" value="https://smarteesmontessori.edu.gh/thank-you.html">
+        <input type="hidden" name="_subject" value="New Online Application - Smartees Montessori School">
+
+        <!-- Applicant’s Personal Information -->
+        <h5 class="mt-3">1. Applicant’s Personal Information</h5>
+        <div class="row">
+          <div class="col-md-6 mb-3">
+            <label for="applicantName" class="form-label">Full Name *</label>
+            <input type="text" class="form-control" id="applicantName" name="applicant_name" required>
+          </div>
+          <div class="col-md-3 mb-3">
+            <label for="applicantDOB" class="form-label">Date of Birth *</label>
+            <input type="date" class="form-control" id="applicantDOB" name="date_of_birth" required>
+          </div>
+          <div class="col-md-3 mb-3">
+            <label for="gender" class="form-label">Gender *</label>
+            <select class="form-select" id="gender" name="gender" required>
+              <option value="">Select</option>
+              <option>Male</option>
+              <option>Female</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="mb-3">
+          <label for="nationality" class="form-label">Nationality *</label>
+          <input type="text" class="form-control" id="nationality" name="nationality" required>
+        </div>
+
+        <div class="mb-3">
+          <label for="address" class="form-label">Residential Address *</label>
+          <textarea class="form-control" id="address" name="home_address" rows="2" required></textarea>
+        </div>
+
+        <div class="row">
+          <div class="col-md-6 mb-3">
+            <label for="town" class="form-label">Town/City *</label>
+            <input type="text" class="form-control" id="town" name="town" required>
+          </div>
+          <div class="col-md-6 mb-3">
+            <label for="region" class="form-label">Region *</label>
+            <input type="text" class="form-control" id="region" name="region" required>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-6 mb-3">
+            <label for="phone" class="form-label">Phone Number *</label>
+            <input type="tel" class="form-control" id="phone" name="phone" required>
+          </div>
+          <div class="col-md-6 mb-3">
+            <label for="email" class="form-label">Email (if any)</label>
+            <input type="email" class="form-control" id="email" name="email">
+          </div>
+        </div>
+
+        <!-- Parent/Guardian Information -->
+        <h5 class="mt-3">2. Parent/Guardian Information</h5>
+        <div class="row">
+          <div class="col-md-6 mb-3">
+            <label for="parentName" class="form-label">Full Name *</label>
+            <input type="text" class="form-control" id="parentName" name="parent_name" required>
+          </div>
+          <div class="col-md-6 mb-3">
+            <label for="relationship" class="form-label">Relationship *</label>
+            <input type="text" class="form-control" id="relationship" name="relationship" required>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-6 mb-3">
+            <label for="parentOccupation" class="form-label">Occupation</label>
+            <input type="text" class="form-control" id="parentOccupation" name="parent_occupation">
+          </div>
+          <div class="col-md-6 mb-3">
+            <label for="parentPhone" class="form-label">Phone *</label>
+            <input type="tel" class="form-control" id="parentPhone" name="parent_phone" required>
+          </div>
+        </div>
+
+        <div class="mb-3">
+          <label for="parentEmail" class="form-label">Email</label>
+          <input type="email" class="form-control" id="parentEmail" name="parent_email">
+        </div>
+
+        <!-- Academic Information -->
+        <h5 class="mt-3">3. Academic Information</h5>
+        <div class="mb-3">
+          <label for="previousSchool" class="form-label">Last School Attended</label>
+          <input type="text" class="form-control" id="previousSchool" name="previous_school">
+        </div>
+        <div class="row">
+          <div class="col-md-6 mb-3">
+            <label for="currentClass" class="form-label">Current Class</label>
+            <input type="text" class="form-control" id="currentClass" name="current_class">
+          </div>
+          <div class="col-md-6 mb-3">
+            <label for="desiredClass" class="form-label">Class Applying For *</label>
+            <input type="text" class="form-control" id="desiredClass" name="desired_class" required>
+          </div>
+        </div>
+        <div class="mb-3">
+          <label for="transferReason" class="form-label">Reason for Transfer (if any)</label>
+          <textarea class="form-control" id="transferReason" name="transfer_reason" rows="2"></textarea>
+        </div>
+
+        <!-- Medical Information -->
+        <h5 class="mt-3">4. Medical Information</h5>
+        <div class="mb-3">
+          <label for="allergies" class="form-label">Known Allergies/Conditions</label>
+          <textarea class="form-control" id="allergies" name="medical_conditions" rows="2"></textarea>
+        </div>
+        <div class="row">
+          <div class="col-md-6 mb-3">
+            <label for="emergencyContact" class="form-label">Emergency Contact Name</label>
+            <input type="text" class="form-control" id="emergencyContact" name="emergency_contact_name">
+          </div>
+          <div class="col-md-6 mb-3">
+            <label for="emergencyPhone" class="form-label">Emergency Contact Phone</label>
+            <input type="tel" class="form-control" id="emergencyPhone" name="emergency_contact_phone">
+          </div>
+        </div>
+
+        <!-- Declaration -->
+        <h5 class="mt-3">5. Declaration</h5>
+        <div class="form-check mb-3">
+          <input class="form-check-input" type="checkbox" id="termsCheck" required>
+          <label class="form-check-label" for="termsCheck">
+            I declare that the information provided is true and correct. *
+          </label>
+        </div>
+
+        <div class="text-center">
+          <button type="submit" class="btn btn-info btn-lg">
+            <i class="bi bi-send me-2"></i>Submit Online Application
+          </button>
+        </div>
+      </form>
+
+      <!-- Success Message -->
+      <div id="onlineSuccessMessage" class="alert alert-info mt-3 d-none" role="alert">
+        <i class="bi bi-info-circle-fill me-2"></i>
+        <strong>Application Submitted!</strong> Thank you for your online application.
+        We'll review your submission and contact you within 3-5 business days.
+      </div>
+    </div> <!-- Close onlineFormContainer -->
+  </div>
+</div>
+
+<script>
+  // Show form only when button is clicked
+  document.getElementById("showOnlineForm").addEventListener("click", function () {
+    document.getElementById("onlineFormContainer").classList.remove("d-none");
+    this.style.display = "none"; // Hide button after click
+  });
+
+  // Show success message after form submission
+  const form = document.getElementById("onlineApplicationForm");
+  form.addEventListener("submit", function () {
+    document.getElementById("onlineSuccessMessage").classList.remove("d-none");
+  });
+</script>
+
+
+
+            <!-- Age Requirements -->
+            <div class="row mb-5">
+                <div class="col-lg-8 mx-auto">
+                    <h3 class="text-primary mb-4">Age Requirements</h3>
+                    <div class="table-responsive">
+                        <table class="table table-striped">
+                            <thead class="table-primary">
+                                <tr>
+                                    <th>Class</th>
+                                    <th>Minimum Age</th>
+                                    <th>Cut-off Date</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>KG1</td>
+                                    <td>3 years</td>
+                                    <td>September 1</td>
+                                </tr>
+                                <tr>
+                                    <td>KG2</td>
+                                    <td>4 years</td>
+                                    <td>September 1</td>
+                                </tr>
+                                <tr>
+                                    <td>Class 1</td>
+                                    <td>5 years</td>
+                                    <td>September 1</td>
+                                </tr>
+                                <tr>
+                                    <td>Class 2-6</td>
+                                    <td>Based on previous class</td>
+                                    <td>September 1</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Fees Information -->
+            <div class="row mb-5">
+                <div class="col-lg-8 mx-auto">
+                    <h3 class="text-primary mb-4">Tuition and Fees</h3>
+                    <div class="card">
+                        <div class="card-body">
+                            <p>We offer competitive fees with flexible payment plans. Fees include:</p>
+                            <ul>
+                                <li>Tuition fees</li>
+                                <li>Textbooks and learning materials</li>
+                                <li>Extracurricular activities</li>
+                                <li>School uniform</li>
+                                <li>Medical services</li>
+                            </ul>
+                            <p><strong>Sibling discounts available</strong></p>
+                            <div class="text-center">
+                                <a href="#contact" class="btn btn-primary">Contact for Fee Structure</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Admissions Office -->
+            <div class="row">
+                <div class="col-lg-8 mx-auto">
+                    <div class="card bg-primary text-white">
+                        <div class="card-body text-center">
+                            <h3>Admissions Office</h3>
+                            <p><strong>Mrs.Ohenaba Ashun Cobbina</strong><br>
+                            Admissions Coordinator<br>
+                            📞 Phone: +233 24 123 4567<br>
+                            ✉️ Email: oheneba514@yahoo.com</p>
+                            <p>Office Hours: Monday-Friday, 7:30 AM - 3:30 PM</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Departments Section -->
+    <section id="departments" class="page-section">
+        <div class="container">
+            <h2 class="section-title">Academic Departments</h2>
+            
+            <div class="row mb-5">
+                <div class="col-lg-8 mx-auto text-center">
+                    <p class="lead">Our school is organized into specialized departments to ensure focused instruction and comprehensive development in all subject areas.</p>
+                </div>
+            </div>
+
+            <!-- Departments -->
+            <div class="row mb-5">
+                <div class="col-md-4 mb-4">
+                    <div class="card h-100">
+                        <div class="card-header bg-primary text-white text-center">
+                            <h4 class="mb-0">Languages Department</h4>
+                        </div>
+                        <div class="card-body">
+                            <p><strong>Subjects:</strong> English, Fante, French</p>
+                            <p><strong>Activities:</strong></p>
+                            <ul>
+                                <li>Reading Club</li>
+                                <li>Debate Society</li>
+                                <li>Spelling Bee Competitions</li>
+                                <li>Creative Writing Workshops</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-md-4 mb-4">
+                    <div class="card h-100">
+                        <div class="card-header bg-primary text-white text-center">
+                            <h4 class="mb-0">Mathematics Department</h4>
+                        </div>
+                        <div class="card-body">
+                            <p><strong>Subjects:</strong> Mathematics</p>
+                            <p><strong>Activities:</strong></p>
+                            <ul>
+                                <li>Math Olympiad Club</li>
+                                <li>Mental Math Competitions</li>
+                                <li>Math Games and Puzzles</li>
+                                <li>STEM Integration Projects</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-md-4 mb-4">
+                    <div class="card h-100">
+                        <div class="card-header bg-primary text-white text-center">
+                            <h4 class="mb-0">Science Department</h4>
+                        </div>
+                        <div class="card-body">
+                            <p><strong>Subjects:</strong> Integrated Science, Environmental Studies</p>
+                            <p><strong>Activities:</strong></p>
+                            <ul>
+                                <li>Science Club</li>
+                                <li>Science Fair Projects</li>
+                                <li>Nature Walks and Exploration</li>
+                                <li>Gardening Club</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-md-4 mb-4">
+                    <div class="card h-100">
+                        <div class="card-header bg-primary text-white text-center">
+                            <h4 class="mb-0">ICT Department</h4>
+                        </div>
+                        <div class="card-body">
+                            <p><strong>Subjects:</strong> Information Communication Technology</p>
+                            <p><strong>Activities:</strong></p>
+                            <ul>
+                                <li>Coding Club</li>
+                                <li>Robotics Workshops</li>
+                                <li>Digital Literacy Programs</li>
+                                <li>Tech Support Team</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-md-4 mb-4">
+                    <div class="card h-100">
+                        <div class="card-header bg-primary text-white text-center">
+                            <h4 class="mb-0">Creative Arts Department</h4>
+                        </div>
+                        <div class="card-body">
+                            <p><strong>Subjects:</strong> Music, Visual Arts, Drama</p>
+                            <p><strong>Activities:</strong></p>
+                            <ul>
+                                <li>School Choir</li>
+                                <li>Art Club</li>
+                                <li>Drama Club</li>
+                                <li>Cultural Dance Troupe</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-md-4 mb-4">
+                    <div class="card h-100">
+                        <div class="card-header bg-primary text-white text-center">
+                            <h4 class="mb-0">Physical Education Department</h4>
+                        </div>
+                        <div class="card-body">
+                            <p><strong>Subjects:</strong> Physical Education</p>
+                            <p><strong>Activities:</strong></p>
+                            <ul>
+                                <li>Football Team</li>
+                                <li>Athletics Club</li>
+                                <li>Volleyball Team</li>
+                                <li>Annual Sports Day</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Gallery Section -->
+    <section id="gallery" class="page-section bg-light">
+        <div class="container">
+            <h2 class="section-title">School Gallery</h2>
+            
+            <div class="row mb-5">
+                <div class="col-lg-8 mx-auto text-center">
+                    <p class="lead">Take a visual tour of our campus facilities, classrooms, and student activities.</p>
+                </div>
+            </div>
+
+            <!-- Gallery -->
+            <div class="row">
+                <div class="col-md-4 mb-4">
+                    <div class="gallery-img">
+                        <img src="images/work.jpeg" alt="Modern Learning Environment" class="img-fluid">
+                    </div>
+                </div>
+                <div class="col-md-4 mb-4">
+                    <div class="gallery-img">
+                        <img src="images/group.jpeg" alt="Student Group Activities" class="img-fluid">
+                    </div>
+                </div>
+                <div class="col-md-4 mb-4">
+                    <div class="gallery-img">
+                        <img src="images/culture_1.jpeg" alt="Cultural Activities" class="img-fluid">
+                    </div>
+                </div>
+                <div class="col-md-4 mb-4">
+                    <div class="gallery-img">
+                        <img src="images/batch.jpeg" alt="Student Activities" class="img-fluid">
+                    </div>
+                </div>
+                <div class="col-md-4 mb-4">
+                    <div class="gallery-img">
+                        <img src="images/WhatsApp Image 2025-08-27 at 10.40.05 AM(1).jpeg" alt="WhatsApp Image" class="img-fluid">
+                    </div>
+                </div>
+                <div class="col-md-4 mb-4">
+                    <div class="gallery-img">
+                        <img src="images/WhatsApp Image 2025-08-27 at 10.40.09 AM.jpeg" alt="WhatsApp Image" class="img-fluid">
+                    </div>
+                </div>
+
+            <div class="text-center mt-4">
+                <a href="#" class="btn btn-primary btn-lg">View More Photos</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- News & Events Section -->
+    <section id="news" class="page-section">
+        <div class="container">
+            <h2 class="section-title">News & Events</h2>
+            
+            <div class="row mb-5">
+                <div class="col-lg-8 mx-auto text-center">
+                    <p class="lead">Stay updated with the latest happenings and upcoming events at our school.</p>
+                </div>
+            </div>
+
+            <!-- News -->
+            <div class="row mb-5">
+                <div class="col-md-6 mb-4">
+                    <div class="card h-100">
+                        <img src="images/batch.jpeg" class="card-img-top" alt="Science Fair">
+                        <div class="card-body">
+                            <span class="badge bg-primary mb-2">October 15, 2023</span>
+                            <h4 class="card-title">Annual Science Fair Winners</h4>
+                            <p class="card-text">Our students showcased innovative projects at the regional science fair, winning three awards for their creative solutions to environmental challenges.</p>
+                            <a href="#" class="btn btn-outline-primary">Read More</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 mb-4">
+                    <div class="card h-100">
+                        <img src="images/excursion.jpeg" class="card-img-top" alt="Sports Day">
+                        <div class="card-body">
+                            <span class="badge bg-primary mb-2">November 5, 2023</span>
+                            <h4 class="card-title">Annual Sports Day Results</h4>
+                            <p class="card-text">The school's annual sports day was a huge success with students participating in various track and field events. The Blue House emerged as the overall winner.</p>
+                            <a href="#" class="btn btn-outline-primary">Read More</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Upcoming Events -->
+            <div class="row">
+                <div class="col-lg-8 mx-auto">
+                    <h3 class="text-primary mb-4">Upcoming Events</h3>
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="d-flex justify-content-between border-bottom py-3">
+                                <div>
+                                    <h5 class="mb-1">Parent-Teacher Meeting</h5>
+                                    <p class="mb-0">November 10, 2023 | 9:00 AM - 12:00 PM</p>
+                                </div>
+                                <div class="text-end">
+                                    <span class="badge bg-primary">All Parents</span>
+                                </div>
+                            </div>
+                            <div class="d-flex justify-content-between border-bottom py-3">
+                                <div>
+                                    <h5 class="mb-1">Cultural Day Celebration</h5>
+                                    <p class="mb-0">November 20, 2023 | 8:00 AM - 2:00 PM</p>
+                                </div>
+                                <div class="text-end">
+                                    <span class="badge bg-primary">All Students</span>
+                                </div>
+                            </div>
+                            <div class="d-flex justify-content-between border-bottom py-3">
+                                <div>
+                                    <h5 class="mb-1">End of Term Examinations</h5>
+                                    <p class="mb-0">December 4-8, 2023 | During School Hours</p>
+                                </div>
+                                <div class="text-end">
+                                    <span class="badge bg-primary">Classes 1-6</span>
+                                </div>
+                            </div>
+                            <div class="d-flex justify-content-between py-3">
+                                <div>
+                                    <h5 class="mb-1">Christmas Concert</h5>
+                                    <p class="mb-0">December 15, 2023 | 4:00 PM - 6:00 PM</p>
+                                </div>
+                                <div class="text-end">
+                                    <span class="badge bg-primary">All Welcome</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="page-section bg-light">
+        <div class="container">
+            <h2 class="section-title">Contact Us</h2>
+            
+            <div class="row mb-5">
+                <div class="col-lg-8 mx-auto text-center">
+                    <p class="lead">We'd love to hear from you. Reach out to us with any questions or to schedule a visit.</p>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6 mb-4">
+                    <div class="card h-100">
+                        <div class="card-body">
+                            <h3 class="text-primary mb-4">Get in Touch</h3>
+                            <div class="d-flex align-items-start mb-4">
+                                <i class="bi bi-geo-alt-fill text-primary fs-4 me-3"></i>
+                                <div>
+                                    <h5>Address</h5>
+                                    <p>Nippon Junction, Elmina<br>Central Region, Ghana</p>
+                                </div>
+                            </div>
+                            <div class="d-flex align-items-start mb-4">
+                                <i class="bi bi-telephone-fill text-primary fs-4 me-3"></i>
+                                <div>
+                                    <h5>Phone</h5>
+                                    <p>0244587921 (Office)</p>
+                                </div>
+                            </div>
+                            <div class="d-flex align-items-start mb-4">
+                                <i class="bi bi-envelope-fill text-primary fs-4 me-3"></i>
+                                <div>
+                                    <h5>Email</h5>
+                                    <p>oheneba514@yahoo.com</p>
+                                </div>
+                            </div>
+                            <div class="d-flex align-items-start">
+                                <i class="bi bi-clock-fill text-primary fs-4 me-3"></i>
+                                <div>
+                                    <h5>Office Hours</h5>
+                                    <p>Monday - Friday: 7:30 AM - 3:30 PM<br>Saturday: 9:00 AM - 12:00 PM</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-md-6 mb-4">
+                    <div class="card h-100">
+                        <div class="card-body">
+                            <h3 class="text-primary mb-4">Send us a Message</h3>
+                            <form action="https://formsubmit.co/oheneba514@yahoo.com" method="POST">
+    <!-- Hidden fields -->
+    <input type="hidden" name="_captcha" value="false">
+    <input type="hidden" name="_next" value="https://yourwebsite.com/thank-you.html">
+    <input type="hidden" name="_subject" value="New Contact Form Message">
+
+    <div class="mb-3">
+        <label for="name" class="form-label">Your Name</label>
+        <input type="text" class="form-control" id="name" name="name" required>
+    </div>
+
+    <div class="mb-3">
+        <label for="email" class="form-label">Email Address</label>
+        <input type="email" class="form-control" id="email" name="email" required>
+    </div>
+
+    <div class="mb-3">
+        <label for="phone" class="form-label">Phone Number</label>
+        <input type="tel" class="form-control" id="phone" name="phone">
+    </div>
+
+    <div class="mb-3">
+        <label for="subject" class="form-label">Subject</label>
+        <select class="form-select" id="subject" name="subject" required>
+            <option selected disabled>Select a subject</option>
+            <option value="admissions">Admissions Inquiry</option>
+            <option value="academics">Academic Programs</option>
+            <option value="tour">Schedule a Tour</option>
+            <option value="feedback">Feedback</option>
+            <option value="other">Other</option>
+        </select>
+    </div>
+
+    <div class="mb-3">
+        <label for="message" class="form-label">Message</label>
+        <textarea class="form-control" id="message" name="message" rows="4" required></textarea>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Send Message</button>
+</form>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Map -->
+            <div class="row mt-5">
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-body p-0">
+                            <div class="ratio ratio-16x9">
+                                   <iframe 
+    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3928.191194853924!2d-1.3436447!3d5.0984324!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xfddfb8c5d18c24f%3A0x0!2sSmartees%20Montessori%20School!5e0!3m2!1sen!2sgh!4v1726032000000!5m2!1sen!2sgh"  
+    width="100%"  
+    height="100%"  
+    frameborder="0"  
+    style="border:0;"  
+    allowfullscreen=""  
+    aria-hidden="false"  
+    tabindex="0">
+  </iframe>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4 mb-4">
+                    <h4 class="mb-4">Smartees Montessori School</h4>
+                    <p>Providing quality Montessori education in a nurturing environment that fosters academic excellence, character development, and lifelong learning.</p>
+                    <div class="social-links mt-4">
+                        <a href="#"><i class="bi bi-facebook"></i></a>
+                        <a href="https://www.tiktok.com/@smartees_montessori_sch?_t=ZM-8zdqgtlAXLi&_r=1"><i class="bi bi-tiktok"></i></a>
+                        <a href="#"><i class="bi bi-instagram"></i></a>
+                        <a href="#"><i class="bi bi-youtube"></i></a>
+                        <a href="https://wa.me/233244587921"><i class="bi bi-whatsapp"></i></a>
+                    </div>
+                </div>
+                <div class="col-md-2 mb-4">
+                    <h5 class="mb-4">Quick Links</h5>
+                    <div class="quick-links">
+                        <a href="#home">Home</a>
+                        <a href="#about">About Us</a>
+                        <a href="#academics">Academics</a>
+                        <a href="#admissions">Admissions</a>
+                        <a href="#departments">Departments</a>
+                        <a href="#gallery">Gallery</a>
+                        <a href="#news">News & Events</a>
+                        <a href="#contact">Contact Us</a>
+                    </div>
+                </div>
+                <div class="col-md-3 mb-4">
+                    <h5 class="mb-4">Contact Info</h5>
+                    <p><i class="bi bi-geo-alt-fill me-2"></i> Nippon Junction, Elmina</p>
+                    <p><i class="bi bi-telephone-fill me-2"></i> 0244587921</p>
+                    <p><i class="bi bi-envelope-fill me-2"></i> oheneba514@yahoo.com</p>
+                </div>
+                <div class="col-md-3 mb-4">
+                    <h5 class="mb-4">School Hours</h5>
+                    <p>Monday - Friday: 7:30 AM - 3:30 PM</p>
+                    <p>Saturday: 9:00 AM - 12:00 PM</p>
+                    <p>Sunday: Closed</p>
+                </div>
+            </div>
+            <hr class="mt-4 mb-4">
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                    <p class="mb-0">© 2023 Smartees Montessori School. All rights reserved.</p>
+                </div>
+                <div class="col-md-6 mb-3 text-md-end">
+                    <a href="#" class="text-white me-3">Privacy Policy</a>
+                    <a href="#" class="text-white">Terms of Use</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Image Slider Functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            const slides = document.querySelectorAll('.slide');
+            const dots = document.querySelectorAll('.slider-dot');
+            let currentSlide = 0;
+            
+            function showSlide(n) {
+                slides.forEach(slide => slide.classList.remove('active'));
+                dots.forEach(dot => dot.classList.remove('active'));
+                
+                currentSlide = (n + slides.length) % slides.length;
+                
+                slides[currentSlide].classList.add('active');
+                dots[currentSlide].classList.add('active');
+            }
+            
+            // Auto advance slides
+            setInterval(() => {
+                showSlide(currentSlide + 1);
+            }, 5000);
+            
+            // Add click events to dots
+            dots.forEach((dot, index) => {
+                dot.addEventListener('click', () => {
+                    showSlide(index);
+                });
+            });
+            
+            // Dark Mode Toggle
+            const darkModeToggle = document.getElementById('darkModeToggle');
+            const body = document.body;
+            
+            darkModeToggle.addEventListener('click', () => {
+                body.classList.toggle('dark-mode');
+                
+                if (body.classList.contains('dark-mode')) {
+                    darkModeToggle.innerHTML = '<i class="bi bi-sun-fill"></i>';
+                } else {
+                    darkModeToggle.innerHTML = '<i class="bi bi-moon-fill"></i>';
+                }
+            });
+            
+            // Animation on scroll
+            const fadeElements = document.querySelectorAll('.fade-in');
+            
+            function checkFade() {
+                fadeElements.forEach(element => {
+                    const elementTop = element.getBoundingClientRect().top;
+                    const elementBottom = element.getBoundingClientRect().bottom;
+                    const isVisible = (elementTop < window.innerHeight - 100) && (elementBottom > 0);
+                    
+                    if (isVisible) {
+                        element.classList.add('visible');
+                    }
+                });
+            }
+            
+            window.addEventListener('scroll', checkFade);
+            window.addEventListener('load', checkFade);
+
+            // Progress Bar Scroll
+            const progressBarFill = document.querySelector('#progress-bar .progress-bar-fill');
+            window.addEventListener('scroll', () => {
+                const scrollTop = window.scrollY;
+                const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+                const scrollPercent = (scrollTop / docHeight) * 100;
+                progressBarFill.style.width = scrollPercent + '%';
+            });
+
+            // Gallery Animation
+            const galleryContainer = document.querySelector('#gallery .row');
+            if (galleryContainer) {
+                const images = galleryContainer.querySelectorAll('.gallery-img img');
+                let currentIndex = 0;
+                images.forEach((img, index) => {
+                    img.style.position = 'absolute';
+                    img.style.top = '0';
+                    img.style.left = '0';
+                    img.style.width = '100%';
+                    img.style.height = '250px';
+                    img.style.objectFit = 'cover';
+                    img.style.opacity = '0';
+                    img.style.transition = 'opacity 1s ease-in-out';
+                    if (index === 0) {
+                        img.style.opacity = '1';
+                        img.style.zIndex = '1';
+                    }
+                });
+                setInterval(() => {
+                    images[currentIndex].style.opacity = '0';
+                    images[currentIndex].style.zIndex = '0';
+                    currentIndex = (currentIndex + 1) % images.length;
+                    images[currentIndex].style.opacity = '1';
+                    images[currentIndex].style.zIndex = '1';
+                }, 4000);
+            }
+
+            // Navbar Scroll Active Link
+            const navbarLinks = document.querySelectorAll('.navbar-nav .nav-link');
+            const sections = document.querySelectorAll('section[id]');
+
+            function updateActiveLink() {
+                const scrollPosition = window.scrollY + 100; // Offset for navbar height
+
+                sections.forEach(section => {
+                    const sectionTop = section.offsetTop;
+                    const sectionHeight = section.offsetHeight;
+                    const sectionId = section.getAttribute('id');
+
+                    if (scrollPosition >= sectionTop && scrollPosition < sectionTop + sectionHeight) {
+                        // Remove active class from all links
+                        navbarLinks.forEach(link => {
+                            link.classList.remove('active');
+                        });
+
+                        // Add active class to current section's link
+                        const activeLink = document.querySelector(`.navbar-nav .nav-link[href="#${sectionId}"]`);
+                        if (activeLink) {
+                            activeLink.classList.add('active');
+                        }
+                    }
+                });
+            }
+
+            // Update active link on scroll
+            window.addEventListener('scroll', updateActiveLink);
+
+            // Update active link on page load
+            window.addEventListener('load', updateActiveLink);
+
+            // Download message function for application form
+            window.showDownloadMessage = function() {
+                document.getElementById('downloadMessage').classList.remove('d-none');
+            };
+        });
+    </script>
+</body>
+</html>
